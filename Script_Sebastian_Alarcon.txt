@@ -1,0 +1,27 @@
+/*1. Creating a big tablespace with a 1G datafile*/
+create tablespace big_tbs_Sebastian_Alarcon datafile 
+'required_df.dbf' 1G;
+
+/*2. Creating a big tablespace with a 1G datafile*/
+create tablespace quiz datafile 
+'quiz_df_one.dbf' 200M AUTOEXTEND ON NEXT 600M MAXSIZE 1G,
+'quiz_df_two.dbf' 200M AUTOEXTEND ON NEXT 600M MAXSIZE 1G,
+'quiz_df_three.dbf' 200M AUTOEXTEND ON NEXT 600M MAXSIZE 1G;
+
+/*3. Creating the profile quiz_profile with unlimited: sessions per user, cpu per session, failed login attemps and 15 min idle time*/
+create profile quiz_profile
+idle_time 15
+session_per_user unlimited
+cpu_per_session unlimited
+failed_login_attemps unlimited;
+
+/*4. Creating user sebastian_alarcon with default tablespace quiz*/
+create user sebastian_alarcon 
+identified by sebas123
+default tablespace quiz;
+
+/*5. Grating user Sebastian_Alarcon the profile quiz_profile*/
+grant quiz_profile to sebastian_alarcon;
+
+/*6. Granting the user sebastian_alarcon the privilege to create session*/
+grant create session to sebastian_alarcon;
